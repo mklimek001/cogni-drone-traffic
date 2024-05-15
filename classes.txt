@@ -1,0 +1,9 @@
+pedestrian
+bicycle
+scooter
+tram
+bus
+car
+delivery
+truck 
+motorbike
