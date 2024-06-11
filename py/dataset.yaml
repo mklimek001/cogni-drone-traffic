@@ -1,0 +1,13 @@
+names:
+  0: pedestrian
+  1: bicycle
+  2: scooter
+  3: tram
+  4: bus
+  5: car
+  6: delivery
+  7: truck
+  8: motorbike
+path: /home/norbert/cogni-drone/dataset/
+train: images/train
+val: images/val
