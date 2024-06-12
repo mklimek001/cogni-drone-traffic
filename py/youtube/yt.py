@@ -1,0 +1,59 @@
+from ultralytics import YOLO
+from vidgear.gears import CamGear
+import cv2
+
+# set in yt quality (1080, 720, 480, ...)
+res_h = 1080
+res_w = round(res_h * 16/9)
+print(res_w, res_h)
+
+# intersection
+# src = "http://youtu.be/ByED80IKdIU"
+# roundabout
+src = "http://youtu.be/1fiF7B6VkCk"
+# low video
+# src = "http://youtu.be/7HaJArMDKgI"
+
+save_images = True
+
+model = YOLO('../../../runs_1920/detect/train/weights/best.pt')
+yolo_input_size = res_w
+yt_stream_res   = f"{res_h}p"
+
+stream = CamGear(
+    source=src,
+    stream_mode=True,
+    logging=True,
+    STREAM_RESOLUTION=yt_stream_res
+).start()
+
+fid = 0
+while True:
+    # read frames from stream
+    frame = stream.read()
+
+    # check for frame if Nonetype
+    if frame is None:
+        break
+
+    # run predictions
+    results = model.predict(frame, stream=False, imgsz=yolo_input_size)
+    frame = results[0].plot(labels=True)
+    
+    if save_images:
+        cv2.imwrite(f"frame{fid:05}.jpg", frame)
+        fid += 1
+
+    # Show output window
+    cv2.imshow("Output", frame)
+
+    # check for 'q' key if pressed
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord("q"):
+        break
+
+# close output window
+cv2.destroyAllWindows()
+
+# safely close video stream
+stream.stop()
