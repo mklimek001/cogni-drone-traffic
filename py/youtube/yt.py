@@ -16,7 +16,7 @@ src = "http://youtu.be/1fiF7B6VkCk"
 
 save_images = True
 
-model = YOLO('../../../runs_1920/detect/train/weights/best.pt')
+model = YOLO('models/runs_1920/detect/train/weights/best.pt')
 yolo_input_size = res_w
 yt_stream_res   = f"{res_h}p"
 
