@@ -15,6 +15,10 @@ print(res_w, res_h)
 # src = "http://youtu.be/7HaJArMDKgI"
 # Kraków new footage
 src = "http://youtu.be/jN5UWu-2cno"
+# zoom & movement
+src = "http://youtu.be/ULT1Sf_nbes"
+# zoom & sharpen
+src = "http://youtu.be/D2cRE3JT-0k"
 
 save_images = False
 
