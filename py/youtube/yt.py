@@ -10,11 +10,13 @@ print(res_w, res_h)
 # intersection
 # src = "http://youtu.be/ByED80IKdIU"
 # roundabout
-src = "http://youtu.be/1fiF7B6VkCk"
+# src = "http://youtu.be/1fiF7B6VkCk"
 # low video
 # src = "http://youtu.be/7HaJArMDKgI"
+# Kraków new footage
+src = "http://youtu.be/jN5UWu-2cno"
 
-save_images = True
+save_images = False
 
 model = YOLO('../../../runs_1920/detect/train/weights/best.pt')
 yolo_input_size = res_w
@@ -27,6 +29,8 @@ stream = CamGear(
     STREAM_RESOLUTION=yt_stream_res
 ).start()
 
+labels = True
+
 fid = 0
 while True:
     # read frames from stream
@@ -38,7 +42,7 @@ while True:
 
     # run predictions
     results = model.predict(frame, stream=False, imgsz=yolo_input_size)
-    frame = results[0].plot(labels=True)
+    frame = results[0].plot(labels=labels)
     
     if save_images:
         cv2.imwrite(f"frame{fid:05}.jpg", frame)
@@ -51,6 +55,8 @@ while True:
     key = cv2.waitKey(1) & 0xFF
     if key == ord("q"):
         break
+    if key == ord("l"):
+        labels ^= True # flip
 
 # close output window
 cv2.destroyAllWindows()
